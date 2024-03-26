@@ -11,19 +11,13 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Git clone repo
-        uses: actions/checkout@v2
+      - uses: actions/checkout@v2
 
-      - name: Set Java version
+      - name: Set up JDK
         uses: actions/setup-java@v2
         with:
-          java-version: '17.0.2'
-          distribution: 'adopt'
+          java-version: '17'
 
-      - name: Install Maven
+      - name: Run Google Java Format
         run: |
-          sudo apt-get install -y maven
-
-      - name: Run Checkstyle
-        run: |
-          mvn checkstyle:checkstyle
+          java -jar /opt/google-java-format/google-java-format.jar --dry-run --set-exit-if-changed $(find . -name "*.java")
